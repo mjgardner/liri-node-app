@@ -4,19 +4,33 @@ var keys = require("./keys");
 var Spotify = require("node-spotify-api");
 var spotify = new Spotify(keys.spotify);
 var moment = require("moment");
+var fs = require("fs");
 
-switch (process.argv[2]) {
-  case "concert-this":
-    concert(process.argv.splice(3).join("+"));
-    break;
-  case "spotify-this-song":
-    song(process.argv.splice(3).join(" "));
-    break;
-  case "movie-this":
-    movie(process.argv.splice(3).join("+"));
-    break;
-  case "do-what-it-says":
-    break;
+var command = process.argv[2];
+if (command === "do-what-it-says") {
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+    var toDoArray = data.split(",");
+    switchboard(toDoArray[0], toDoArray[1]);
+  });
+} else {
+  switchboard(command, process.argv.splice(3).join(" "));
+}
+
+function switchboard(operation, item) {
+  switch (operation) {
+    case "concert-this":
+      concert(item);
+      break;
+    case "spotify-this-song":
+      song(item);
+      break;
+    case "movie-this":
+      movie(item);
+      break;
+  }
 }
 
 function concert(artist) {
