@@ -62,12 +62,25 @@ function song(tune) {
 }
 
 function movie(film) {
-  var url =
-    "http://www.omdbapi.com/?t=" + film + "&y=&plot=short&apikey=trilogy";
+  var url = film
+    ? "http://www.omdbapi.com/?t=" + film + "&plot=short&apikey=trilogy"
+    : "http://www.omdbapi.com/?i=tt0485947&plot=short&apikey=trilogy"; // Mr. Nobody (2009)
   axios
     .get(url)
     .then(function(response) {
-      console.log(response.data);
+      console.log("Title: " + response.data.Title);
+      console.log("Year: " + response.data.Year);
+      for (var rating of response.data.Ratings) {
+        switch (rating.Source) {
+          case "Internet Movie Database":
+          case "Rotten Tomatoes":
+            console.log(rating.Source + " rating: " + rating.Value);
+        }
+      }
+      console.log("Country: " + response.data.Country);
+      console.log("Language: " + response.data.Language);
+      console.log("Plot: " + response.data.Plot);
+      console.log("Actors: " + response.data.Actors);
     })
     .catch(axiosError);
 }
