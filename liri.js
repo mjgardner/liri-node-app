@@ -104,17 +104,19 @@ function axiosError(error) {
 }
 
 function spotifyOut(data) {
-  console.log(
-    "Artist(s): " +
-      data.artists
-        .map(function(artist) {
-          return artist.name;
-        })
-        .join(", ")
-  );
-  console.log("Track name: " + data.name);
-  console.log("Preview URL: " + data.preview_url);
-  console.log("Album: " + data.album.name);
+  if (data) {
+    console.log(
+      "Artist(s): " +
+        data.artists
+          .map(function(artist) {
+            return artist.name;
+          })
+          .join(", ")
+    );
+    console.log("Track name: " + data.name);
+    console.log("Preview URL: " + data.preview_url);
+    console.log("Album: " + data.album.name);
+  }
 }
 
 function spotifyCatch(error) {
