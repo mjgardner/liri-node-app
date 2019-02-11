@@ -114,7 +114,9 @@ function spotifyOut(data) {
           .join(", ")
     );
     console.log("Track name: " + data.name);
-    console.log("Preview URL: " + data.preview_url);
+    if (data.preview_url) {
+      console.log("Preview URL: " + data.preview_url);
+    }
     console.log("Album: " + data.album.name);
   }
 }
